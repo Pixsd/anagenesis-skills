@@ -214,6 +214,13 @@ export function validateTree(
       } catch {
         fail("VALIDATION_FAILED", "Invalid reference encoding");
       }
+      // Link destinations may contain current-directory segments; stored tree
+      // paths may not. Remove only ".", keeping absolute paths and ".."
+      // intact so the existing safety checks still reject them.
+      ref = ref
+        .split("/")
+        .filter((segment) => segment !== ".")
+        .join("/");
       safeRelative(ref);
       const target = path.posix.join(path.posix.dirname(file.path), ref);
       if (!tree.entries.some((e) => e.path === target))
