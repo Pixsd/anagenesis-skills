@@ -432,8 +432,24 @@ async function materializeBase(
   return path.join(target, "SKILL.md");
 }
 
-async function round(s: Store, python: Python, night: NightRecord) {
+interface RoundResult {
+  round: number;
+  code: number | null;
+  signal: NodeJS.Signals | null;
+  stdout: string;
+  stderr: string;
+}
+/** Runs the next upstream round, or returns its saved outcome when the
+ * wrapper died after Python finished but before run.json was updated:
+ * a finished round is never executed twice. Failures are not saved, so a
+ * failed round can be retried. */
+async function execute(s: Store, night: NightRecord): Promise<RoundResult> {
   const p = paths(s, night.sleepId);
+  const saved = path.join(p.root, "round.json");
+  if (await exists(saved)) {
+    const last = await readJson<RoundResult>(saved);
+    if (last.round === night.rounds + 1) return last;
+  }
   if (await exists(p.handoff)) await checkAnswers(p.handoff);
   for (const skill of pinnedSkills(night))
     await materializeBase(s, skill, p.project);
@@ -444,6 +460,7 @@ async function round(s: Store, python: Python, night: NightRecord) {
     "SKILL.md",
   );
   await removeOrphanStagings(p.project);
+  const python = findPython();
   const run = await s.lock("sleep-state", () =>
     runPython(
       python,
@@ -475,6 +492,14 @@ async function round(s: Store, python: Python, night: NightRecord) {
     ),
   );
   await removeOrphanStagings(p.project);
+  const result = { round: night.rounds + 1, ...run };
+  if (run.code === 0 || run.code === 3) await writeJson(saved, result);
+  return result;
+}
+
+async function round(s: Store, night: NightRecord) {
+  const p = paths(s, night.sleepId);
+  const run = await execute(s, night);
   night.rounds += 1;
   delete night.pending;
   if (run.code === 3) {
@@ -571,8 +596,7 @@ async function recover(s: Store, night: NightRecord) {
 
 async function advance(s: Store, night: NightRecord) {
   if (TERMINAL.includes(night.state)) return night;
-  const python = findPython();
-  const next = (await recover(s, night)) ?? (await round(s, python, night));
+  const next = (await recover(s, night)) ?? (await round(s, night));
   await writeNight(s, next);
   return next;
 }
