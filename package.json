@@ -18,7 +18,8 @@
     "LICENSE",
     "vendor",
     "!**/__pycache__",
-    "fixtures"
+    "fixtures",
+    "python"
   ],
   "scripts": {
     "build": "tsc",
