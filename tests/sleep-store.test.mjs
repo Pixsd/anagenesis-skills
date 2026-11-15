@@ -133,3 +133,17 @@ test("Sleep creates only the managed skill, with a declared policy", async (t) =
   assert.match(rev.metadata.sources[0].uri, /microsoft\/SkillOpt/);
   assert.equal(rev.metadata.policy.evaluation.configuration.backend, "handoff");
 });
+
+test("Skill lookup matches the whole id, never a longer id with the same prefix", async (t) => {
+  const { store } = await published(t, "release-notes");
+  assert.equal(store.head("release"), null);
+  assert.ok(store.head("release-notes"));
+  await assert.rejects(
+    resolve(store, { schemaVersion: 1, skillId: "release" }),
+    { code: "NOT_FOUND" },
+  );
+  await assert.rejects(
+    history(store, { schemaVersion: 1, skillId: "release" }),
+    { code: "NOT_FOUND" },
+  );
+});

@@ -89,7 +89,7 @@ The policy separates development, validation holdout and regression suite; ids a
 Cases used for writing never enter the holdout; holdout prompts, expected answers and detailed results stay with the external evaluator until submit.
 If the authoring agent has seen them, the manifest must say so and the gate requires a new holdout; calling a separate file "holdout" is not enough.
 The package verifies id/digest separation, coverage and declarations, but cannot by itself certify what the agent's context contained.
-Every attempt consumes its holdout: after a rejection the revealed cases become development and a new attempt needs an unexposed set. Structural checks that do not depend on evaluation, such as a missing diagnosis, run before the attempt is frozen.
+Every attempt consumes its holdout: after a rejection the revealed cases become development and a new attempt needs an unexposed set. Checks on the request alone, such as a missing diagnosis or mining declaration, run before the attempt is frozen and consume nothing. Checks on the submitted files (size, symlinks, unsafe paths, invalid UTF-8) run while freezing and do consume the holdout: the evaluator has already run the holdout cases against those files, so the cases are exposed whatever the outcome.
 The policy fixes, before the work, minimum sample size, repetitions, hard/soft aggregation, absolute thresholds and regression tolerances.
 No threshold can be lowered at submit; a new policy requires a new candidate and a comparable new baseline.
 For create/improve the Microsoft gate compares the candidate score with the baseline, both recomputed on the same holdout.
