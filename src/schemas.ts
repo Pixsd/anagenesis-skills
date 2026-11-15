@@ -74,6 +74,32 @@ const preparation = {
   policy: policySchema,
 };
 export const createSchema = z.object(preparation).strict();
+const severity = z.enum(["none", "low", "medium", "high"]);
+export const failureDimensions = [
+  "knowledge",
+  "toolUsage",
+  "clarification",
+  "style",
+] as const;
+export const analysisSchema = z
+  .object({
+    knowledge: severity,
+    toolUsage: severity,
+    clarification: severity,
+    style: severity,
+  })
+  .strict();
+const miningStage = z
+  .object({ sources: z.array(text).min(1), summary: text })
+  .strict();
+export const miningSchema = z
+  .object({
+    workflow: miningStage,
+    tools: miningStage,
+    knowledge: miningStage,
+    synthesis: miningStage,
+  })
+  .strict();
 export const improveSchema = z
   .object({
     ...preparation,
@@ -144,6 +170,10 @@ export const submitSchema = z
               "environment",
               "execution",
             ]),
+            defect: z
+              .enum(["knowledge", "tool_usage", "clarification", "style"])
+              .optional(),
+            files: z.array(text).optional(),
             sections: z.array(text).min(1),
             minimalChange: text,
             expectedTest: text,
@@ -151,6 +181,7 @@ export const submitSchema = z
           .strict(),
       )
       .optional(),
+    mining: miningSchema.optional(),
   })
   .strict();
 export const restoreSchema = z
@@ -180,8 +211,14 @@ export const feedbackSchema = z
     category: text,
     possibleCause: text.nullable(),
     supersedes: uuidSchema.optional(),
+    analysis: analysisSchema.optional(),
+    disposition: z.literal("not_skill").optional(),
   })
-  .strict();
+  .strict()
+  .refine((f) => !f.disposition || f.supersedes, {
+    message: "disposition requires supersedes",
+    path: ["disposition"],
+  });
 export const historySchema = z
   .object({
     schemaVersion: z.literal(1),
@@ -215,5 +252,7 @@ export type RestoreRequest = z.input<typeof restoreSchema>;
 export type FeedbackRequest = z.input<typeof feedbackSchema>;
 export type HistoryRequest = z.input<typeof historySchema>;
 export type ResolveRequest = z.input<typeof resolveSchema>;
+export type Analysis = z.infer<typeof analysisSchema>;
+export type Mining = z.infer<typeof miningSchema>;
 export type Policy = z.infer<typeof policySchema>;
 export type Manifest = z.infer<typeof manifestSchema>;

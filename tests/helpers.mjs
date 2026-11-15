@@ -95,6 +95,16 @@ export async function writeSkill(
     `---\nname: ${skillId}\ndescription: Useful test skill\n---\n\n${body}\n`,
   );
 }
+export function mining(request) {
+  const uri = request.sources[0].uri;
+  const stage = (summary) => ({ sources: [uri], summary });
+  return {
+    workflow: stage("Task workflow from the source"),
+    tools: stage("Tools named by the source"),
+    knowledge: stage("Domain facts from the source"),
+    synthesis: stage("Merged into SKILL.md"),
+  };
+}
 export async function submission(candidate, request, options = {}) {
   const { index = 0, baseline = 0.5, score = 0.8, regression = 1 } = options;
   const tree = await snapshotTree(candidate.workspacePath);
@@ -162,6 +172,10 @@ export async function submission(candidate, request, options = {}) {
             {
               evidenceIds: [p.development[0].id],
               category: "skill",
+              defect: "knowledge",
+              files: tree.entries
+                .filter((e) => e.type === "file")
+                .map((e) => e.path),
               cause: "Instructions lack a required step",
               sections: ["Procedure"],
               minimalChange: "Add the missing step",
@@ -169,7 +183,7 @@ export async function submission(candidate, request, options = {}) {
             },
           ],
         }
-      : {}),
+      : { mining: mining(request) }),
   };
 }
 export async function fixture(t, skillId = "test-skill") {

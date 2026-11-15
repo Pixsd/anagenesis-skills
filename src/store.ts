@@ -47,6 +47,7 @@ export interface Publication {
   commit: string;
   digest: string;
   restoredFrom?: number;
+  warnings?: string[];
 }
 export interface Receipt {
   operationId: string;
@@ -75,6 +76,8 @@ export interface Revision {
   entries: Omit<TreeEntry, "data">[];
   evidence?: unknown;
   diagnosis?: unknown;
+  mining?: unknown;
+  warnings?: string[];
 }
 export interface StoredRevision {
   commit: string;
@@ -395,6 +398,7 @@ export class Store {
       commit: rev.commit,
       digest: m.digest,
       ...(m.restoredFrom ? { restoredFrom: m.restoredFrom } : {}),
+      ...(m.warnings?.length ? { warnings: m.warnings } : {}),
     };
   }
   findReceipt(
