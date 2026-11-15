@@ -81,3 +81,87 @@ test("Git environment cannot redirect writes into the calling repository", async
     code: "ENOENT",
   });
 });
+
+test("CLI Sleep adoption and utilities use JSON requests, clean up and report errors", async (t) => {
+  const {
+    opts,
+    night,
+    run: nightRequest,
+  } = await import("./sleep-helpers.mjs");
+  if (opts.skip) return t.skip(opts.skip);
+  const { Store } = await import("../dist/index.js");
+  const { author, uuid } = await import("./helpers.mjs");
+  const root = await temporary(t);
+  const store = await Store.open({ storePath: path.join(root, "store") });
+  const view = await night(store, nightRequest());
+  const args = ["sleep", "--store", store.root, "--request", "-"];
+  const req = {
+    schemaVersion: 1,
+    action: "adopt",
+    sleepId: view.sleepId,
+    operationId: uuid(),
+    author,
+  };
+  const adopted = run(args, JSON.stringify(req));
+  assert.equal(adopted.status, 0, adopted.stdout);
+  assert.equal(adopted.stderr, "");
+  assert.equal(adopted.json.status, "cleaned");
+  assert.equal(adopted.json.adoption.publications[0].version, 1);
+  assert.deepEqual(run(args, JSON.stringify(req)).json, adopted.json);
+  assert.equal(
+    run(
+      args,
+      JSON.stringify({
+        schemaVersion: 1,
+        action: "cleanup",
+        sleepId: view.sleepId,
+      }),
+    ).json.status,
+    "cleaned",
+  );
+  const scheduled = run(
+    args,
+    JSON.stringify({
+      schemaVersion: 1,
+      action: "schedule",
+      project: "/work/demo",
+      runner: "my-agent sleep",
+    }),
+  );
+  assert.equal(scheduled.status, 0);
+  assert.match(scheduled.json.crontab, /my-agent sleep/);
+  assert.equal(
+    run(
+      args,
+      JSON.stringify({
+        schemaVersion: 1,
+        action: "unschedule",
+        project: "/work/demo",
+      }),
+    ).json.status,
+    "unscheduled",
+  );
+  const manifest = path.join(root, "tasks.json");
+  const outcomes = path.join(root, "outcomes.json");
+  await fs.writeFile(manifest, JSON.stringify(["task-a", "task-b"]));
+  await fs.writeFile(outcomes, JSON.stringify({ "task-a": 0, "task-b": 1 }));
+  const evaluated = run(
+    args,
+    JSON.stringify({
+      schemaVersion: 1,
+      action: "evalkit",
+      manifest,
+      a: outcomes,
+      aa: true,
+      boot: 100,
+    }),
+  );
+  assert.equal(evaluated.status, 0);
+  assert.equal(evaluated.json.result.delta, 0);
+  const missing = run(args, JSON.stringify({ ...req, sleepId: uuid() }));
+  assert.equal(missing.status, 5);
+  assert.equal(missing.json.error.code, "NOT_FOUND");
+  const help = run(["sleep", "--help"]);
+  assert.ok(help.json.sleepActions.includes("adopt"));
+  assert.ok(help.json.sleepActions.includes("evalkit"));
+});
