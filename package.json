@@ -1,0 +1,57 @@
+{
+  "name": "anagenesis-skills",
+  "version": "0.1.0",
+  "description": "Local, evidence-gated skill revisions for agent CLIs",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "bin": {
+    "anagenesis": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "vendor",
+    "!**/__pycache__",
+    "python",
+    "fixtures",
+    "README.md",
+    "SKILL_PACKAGE_CONTRACT.md",
+    "THIRD_PARTY_NOTICES.md",
+    "examples",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "test:coverage": "npm run build && node --experimental-test-coverage --test tests/*.test.mjs",
+    "fixtures": "python3 scripts/generate-gate-fixtures.py",
+    "prepack": "npm run build",
+    "format": "prettier --write src tests examples README.md THIRD_PARTY_NOTICES.md package.json tsconfig.json .github",
+    "format:check": "prettier --check src tests examples README.md THIRD_PARTY_NOTICES.md package.json tsconfig.json .github",
+    "check": "npm run format:check && npm test"
+  },
+  "dependencies": {
+    "fs-ext": "2.1.1",
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/fs-ext": "2.0.3",
+    "@types/node": "^22.0.0",
+    "prettier": "3.8.1",
+    "typescript": "^5.9.0"
+  },
+  "private": true
+}
