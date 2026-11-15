@@ -12,13 +12,16 @@
     "linux"
   ],
   "files": [
-    "dist"
+    "dist",
+    "SKILL_PACKAGE_CONTRACT.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc",
     "prepack": "npm run build",
-    "format": "prettier --write src package.json tsconfig.json",
-    "format:check": "prettier --check src package.json tsconfig.json",
+    "format": "prettier --write src THIRD_PARTY_NOTICES.md package.json tsconfig.json",
+    "format:check": "prettier --check src THIRD_PARTY_NOTICES.md package.json tsconfig.json",
     "check": "npm run format:check && npm run build"
   },
   "dependencies": {
