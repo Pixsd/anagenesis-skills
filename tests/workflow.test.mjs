@@ -198,3 +198,36 @@ test("Resolve regenerates a corrupted cache from immutable Git", async (t) => {
   const b = await resolve(f.store, req);
   assert.equal((await snapshotTree(b.path)).digest, f.publication.digest);
 });
+
+test("uppercase operation UUIDs remain readable and idempotent across publications", async (t) => {
+  const f = await fixture(t);
+  const request = createRequest("uppercase-skill");
+  request.operationId = request.operationId.toUpperCase();
+  const candidate = await create(f.store, request);
+  await writeSkill(candidate, request.skillId);
+  assert.deepEqual(await create(f.store, request), candidate);
+  const submitRequest = await submission(candidate, request);
+  submitRequest.operationId = submitRequest.operationId.toUpperCase();
+  const publication = await submit(f.store, submitRequest);
+  assert.equal(publication.status, "published");
+  const query = { schemaVersion: 1, skillId: request.skillId };
+  assert.equal(
+    (await history(f.store, query)).revisions[0].metadata.receipt.operationId,
+    submitRequest.operationId,
+  );
+  assert.equal((await resolve(f.store, query)).digest, publication.digest);
+  const restoreRequest = {
+    ...query,
+    operationId: uuid().toUpperCase(),
+    sourceVersion: 1,
+    expectedVersion: 1,
+    reason: "Restore with uppercase UUID",
+    author,
+  };
+  const restored = await restore(f.store, restoreRequest);
+  assert.equal(restored.version, 2);
+  assert.deepEqual(await restore(f.store, restoreRequest), restored);
+  assert.deepEqual(await submit(f.store, submitRequest), publication);
+  assert.equal((await history(f.store, query)).revisions.length, 2);
+  assert.equal((await resolve(f.store, query)).digest, publication.digest);
+});

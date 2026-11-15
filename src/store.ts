@@ -23,7 +23,7 @@ import {
   type Snapshot,
   type TreeEntry,
 } from "./tree.js";
-import { policySchema, type Policy } from "./schemas.js";
+import { policySchema, uuidSchema, type Policy } from "./schemas.js";
 import type { EvaluationReport } from "./evaluation.js";
 export type Phase =
   | "before-objects"
@@ -301,7 +301,7 @@ export class Store {
     if (
       !/^[a-f0-9]{64}$/.test(metadata.digest) ||
       !/^[a-f0-9]{64}$/.test(metadata.receipt.inputDigest) ||
-      !/^[a-f0-9-]{36}$/.test(metadata.receipt.operationId) ||
+      !uuidSchema.safeParse(metadata.receipt.operationId).success ||
       !policySchema.safeParse(metadata.policy).success ||
       !Array.isArray(metadata.sources) ||
       !metadata.sources.length ||

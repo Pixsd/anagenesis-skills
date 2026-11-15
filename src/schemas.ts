@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { fail } from "./errors.js";
+export const uuidSchema = z.string().uuid();
 export const digestSchema = z.string().regex(/^[a-f0-9]{64}$/);
 const text = z.string().trim().min(1).max(100_000);
 export const skillIdSchema = z
@@ -57,7 +58,7 @@ export const policySchema = z
   .strict();
 const mutation = {
   schemaVersion: z.literal(1),
-  operationId: z.string().uuid(),
+  operationId: uuidSchema,
 };
 const preparation = {
   ...mutation,
@@ -77,7 +78,7 @@ export const improveSchema = z
   .object({
     ...preparation,
     expectedVersion: version,
-    feedbackIds: z.array(z.string().uuid()),
+    feedbackIds: z.array(uuidSchema),
   })
   .strict();
 const runSchema = z
@@ -127,7 +128,7 @@ export const manifestSchema = z
 export const submitSchema = z
   .object({
     ...mutation,
-    candidateId: z.string().uuid(),
+    candidateId: uuidSchema,
     expectedDigest: digestSchema,
     evidenceManifest: manifestSchema,
     diagnosis: z
@@ -178,7 +179,7 @@ export const feedbackSchema = z
     evidenceRefs: z.array(text),
     category: text,
     possibleCause: text.nullable(),
-    supersedes: z.string().uuid().optional(),
+    supersedes: uuidSchema.optional(),
   })
   .strict();
 export const historySchema = z
