@@ -26,6 +26,15 @@ import {
   validatePolicy,
 } from "./evaluation.js";
 import {
+  analyzeFailure,
+  checkSubmission,
+  creationStages,
+  defectMap,
+  groupFeedback,
+  skillLengthLimit,
+  skillWarnings,
+} from "./forge.js";
+import {
   parse,
   createSchema,
   improveSchema,
@@ -209,6 +218,16 @@ async function prepare(
         baseVersion: c.baseVersion,
         baseDigest: c.baseDigest,
         feedback: selected,
+        ...(kind === "improve"
+          ? { failureGroups: groupFeedback(selected), defectMap }
+          : {
+              creation: {
+                instruction:
+                  "Build the skill in four stages and declare in submit.mining the source URIs or development case ids used by each stage.",
+                stages: creationStages,
+              },
+            }),
+        lengthGuidance: `Keep SKILL.md within ${skillLengthLimit.lines} lines and ${skillLengthLimit.characters} characters; move detail into references/. Longer files publish with a warning.`,
         evaluationPlan: evaluationPlan(request.policy),
         development: request.policy.development,
         instructions: [
@@ -236,11 +255,13 @@ async function prepare(
           kind === "improve"
             ? {
                 instruction:
-                  "Complete submit.diagnosis: distinguish skill defects from tool, data, environment and execution failures. Non-skill errors do not alone justify rewriting. Explain whether late feedback still applies to the base.",
+                  "Complete submit.diagnosis: distinguish skill defects from tool, data, environment and execution failures. Non-skill errors do not alone justify rewriting. Explain whether late feedback still applies to the base. Skill entries name a defect (knowledge, tool_usage, clarification, style) and every file they change; every changed file must be covered.",
                 fields: [
                   "evidenceIds",
                   "cause",
                   "category",
+                  "defect",
+                  "files",
                   "sections",
                   "minimalChange",
                   "expectedTest",
@@ -374,6 +395,22 @@ export function submit(
                 path.join(s.root, "workspaces", c.candidateId, "skill"),
                 policy.limits,
               );
+              checkSubmission({
+                kind: c.kind,
+                diagnosis: request.diagnosis,
+                mining: request.mining,
+                evidenceIds: new Set([
+                  ...("feedbackIds" in c.request ? c.request.feedbackIds : []),
+                  ...policy.development.map((d) => d.id),
+                  ...c.request.sources.map((d) => d.uri),
+                ]),
+                sourceRefs: new Set([
+                  ...c.request.sources.map((d) => d.uri),
+                  ...policy.development.map((d) => d.id),
+                ]),
+                base: current ? s.loadTree(current) : null,
+                candidate: tree,
+              });
               attempt.snapshot = {
                 digest: tree.digest,
                 entries: tree.entries.map(({ data, ...e }) => ({
@@ -423,27 +460,6 @@ export function submit(
                 "expectedDigest does not match frozen candidate",
               );
             validateTree(tree, c.skillId, policy.limits);
-            if (c.kind === "improve") {
-              if (!request.diagnosis?.some((d) => d.category === "skill"))
-                fail(
-                  "EVIDENCE_INVALID",
-                  "Improvement requires an evidence-linked skill diagnosis",
-                );
-              const ids = new Set([
-                ...(c.request as ImproveRequest).feedbackIds,
-                ...policy.development.map((d) => d.id),
-                ...c.request.sources.map((d) => d.uri),
-              ]);
-              if (
-                request.diagnosis.some((d) =>
-                  d.evidenceIds.some((id) => !ids.has(id)),
-                )
-              )
-                fail(
-                  "EVIDENCE_INVALID",
-                  "Diagnosis references unknown evidence",
-                );
-            }
             const report = evaluateEvidence(
               policy,
               request.evidenceManifest,
@@ -488,6 +504,10 @@ export function submit(
               entries: tree.entries.map(({ data: _, ...e }) => e),
               evidence: request.evidenceManifest,
               ...(request.diagnosis ? { diagnosis: request.diagnosis } : {}),
+              ...(request.mining ? { mining: request.mining } : {}),
+              ...(skillWarnings(tree).length
+                ? { warnings: skillWarnings(tree) }
+                : {}),
             };
             const result = await s.publish(tree, metadata);
             c.state = "published";
@@ -576,6 +596,9 @@ export function restore(store: StoreInput, input: RestoreRequest) {
           report: null,
           diff: diffTrees(s.loadTree(current), tree),
           entries: tree.entries.map(({ data: _, ...e }) => e),
+          ...(skillWarnings(tree).length
+            ? { warnings: skillWarnings(tree) }
+            : {}),
         };
         if (s.head(req.skillId) !== current.commit)
           fail("STALE_BASE", "Skill changed before restore");
@@ -617,6 +640,7 @@ export function recordFeedback(store: StoreInput, input: FeedbackRequest) {
           ...req,
           feedbackId,
           assignment: req.version === null ? "unassigned" : "assigned",
+          ...(req.analysis ? { failure: analyzeFailure(req.analysis) } : {}),
         };
         const p = path.join(s.root, "feedback", feedbackId + ".json");
         if (await exists(p)) {
