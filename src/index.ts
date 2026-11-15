@@ -6,6 +6,7 @@ export {
   restore,
   recordFeedback,
   resolve,
+  sleep,
 } from "./api.js";
 export type { StoreInput, CandidateResult, Rejected } from "./api.js";
 export { Store } from "./store.js";
@@ -22,7 +23,12 @@ export type {
   Manifest,
   Analysis,
   Mining,
+  SleepRequest,
+  SleepRunRequest,
+  SleepConfig,
+  Transcript,
 } from "./schemas.js";
+export type { NightRecord, NightState } from "./sleep/night.js";
 export { AnagenesisError } from "./errors.js";
 export { evaluateGate, selectGateScore } from "./gate.js";
 export type { GateInput, GateResult, GateMetric } from "./gate.js";
