@@ -50,7 +50,9 @@ import {
   type FeedbackRequest,
   type HistoryRequest,
   type ResolveRequest,
+  type SleepRequest,
 } from "./schemas.js";
+import { sleepNight } from "./sleep/night.js";
 export type StoreInput = Store | StoreOptions;
 interface Candidate {
   schemaVersion: 1;
@@ -651,4 +653,8 @@ export function recordFeedback(store: StoreInput, input: FeedbackRequest) {
       }),
     );
   });
+}
+/** Drive a handoff night, adopt its proposal, clean data, or run upstream utilities. */
+export function sleep(store: StoreInput, input: SleepRequest) {
+  return execute(store, (s) => sleepNight(s, input));
 }
