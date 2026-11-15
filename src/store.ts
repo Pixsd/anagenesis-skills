@@ -62,7 +62,7 @@ export interface Revision {
   parent: string | null;
   timestamp: string;
   receipt: Receipt;
-  kind: "submit" | "restore";
+  kind: "submit" | "restore" | "sleep";
   candidateId?: string;
   restoredFrom?: number;
   sourceDigest?: string;
@@ -77,6 +77,7 @@ export interface Revision {
   evidence?: unknown;
   diagnosis?: unknown;
   mining?: unknown;
+  sleep?: unknown;
   warnings?: string[];
 }
 export interface StoredRevision {
@@ -309,7 +310,7 @@ export class Store {
       !Array.isArray(metadata.sources) ||
       !metadata.sources.length ||
       !Array.isArray(metadata.feedbackIds) ||
-      !["submit", "restore"].includes(metadata.kind)
+      !["submit", "restore", "sleep"].includes(metadata.kind)
     )
       fail("STORE_CORRUPT", "Invalid revision provenance or frozen policy");
     const parents = this.git(["rev-list", "--parents", "-n", "1", commit])
