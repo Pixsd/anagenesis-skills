@@ -270,3 +270,58 @@ test(
     assert.equal(recovered.result.staging_dir, view.result.staging_dir);
   },
 );
+
+test(
+  "A round that finished before its record was written is reused, not rerun",
+  opts,
+  async (t) => {
+    const store = await fresh(t);
+    const runJson = (id) =>
+      path.join(store.root, "sleep", "nights", id, "run.json");
+    const rewind = async (id, record) => {
+      const { reason: _r, result: _s, pending: _p, ...rest } = record;
+      await fs.writeFile(
+        runJson(id),
+        JSON.stringify({
+          ...rest,
+          state: "pending",
+          rounds: record.rounds - 1,
+        }),
+      );
+    };
+    // Python is unreachable from here on: any rerun would fail with NOT_FOUND.
+    const saved = process.env.ANAGENESIS_PYTHON;
+    const unreachable = () =>
+      (process.env.ANAGENESIS_PYTHON = "/nonexistent/python3");
+    t.after(() => {
+      if (saved === undefined) delete process.env.ANAGENESIS_PYTHON;
+      else process.env.ANAGENESIS_PYTHON = saved;
+    });
+    const resume = (sleepId) =>
+      sleep(store, { schemaVersion: 1, action: "resume", sleepId });
+
+    // An idle night: Python printed nothing and archived nothing.
+    const idle = await night(store, run({ transcripts: [] }));
+    assert.equal(idle.reason, "no_tasks");
+    const idleRecord = JSON.parse(await fs.readFile(runJson(idle.sleepId)));
+    await rewind(idle.sleepId, idleRecord);
+    unreachable();
+    const again = await resume(idle.sleepId);
+    assert.equal(again.status, "idle");
+    assert.equal(again.reason, "no_tasks");
+    assert.equal(again.rounds, idleRecord.rounds);
+
+    // A pending round is recovered the same way.
+    if (saved === undefined) delete process.env.ANAGENESIS_PYTHON;
+    else process.env.ANAGENESIS_PYTHON = saved;
+    const first = await sleep(store, run());
+    assert.equal(first.status, "pending");
+    const record = JSON.parse(await fs.readFile(runJson(first.sleepId)));
+    await rewind(first.sleepId, record);
+    unreachable();
+    const recovered = await resume(first.sleepId);
+    assert.equal(recovered.status, "pending");
+    assert.equal(recovered.rounds, 1);
+    assert.equal(recovered.pending.count, first.pending.count);
+  },
+);
