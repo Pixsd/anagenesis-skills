@@ -1,0 +1,2604 @@
+{
+  "source": "microsoft/SkillOpt",
+  "commit": "e4ea6a6771e797ef820cdd8bfea64c57e0481065",
+  "sourceSha256": "658982e845430ee08bd47fe0e2326df067369a6af63741d98f2930e069cd4c70",
+  "rows": [
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": -1.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": -1.0
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": -1.0
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": -1.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": -1.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": -1.0
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.0
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.0
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.0
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.25
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.25
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.25
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.25
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.25
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.25
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.5
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.5
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.5
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.5
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.5
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 0.5
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 1.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 1.0
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 1.0
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 1.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 1.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 1.0
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 2.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 2.0
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 2.0
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 2.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 2.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "hard",
+        "mixed_weight": 2.0
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": -1.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": -1.0
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": -1.0
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": -1.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": -1.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": -1.0
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.0
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.0
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.0
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.25
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.25
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.25
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.25
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.25
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.25
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.5
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.5
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.5
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.5
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.5
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 0.5
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 1.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 1.0
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 1.0
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 1.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 1.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 1.0
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 2.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 2.0
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 2.0
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 2.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 2.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "soft",
+        "mixed_weight": 2.0
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": -1.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": -1.0
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": -1.0
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": -1.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": -1.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": -1.0
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.0
+      },
+      "score": 0.2,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.0
+      },
+      "score": 0.9,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9,
+        "best_skill": "candidate",
+        "best_score": 0.9,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.0
+      },
+      "score": 0.0,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.25
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.25
+      },
+      "score": 0.22500000000000003,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.25
+      },
+      "score": 0.9125000000000001,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.9125000000000001,
+        "best_skill": "candidate",
+        "best_score": 0.9125000000000001,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.25
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.25
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.25
+      },
+      "score": 0.25,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.25,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.5
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.5
+      },
+      "score": 0.25,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.5
+      },
+      "score": 0.925,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.925,
+        "best_skill": "candidate",
+        "best_score": 0.925,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.5
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.5
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 0.5
+      },
+      "score": 0.5,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 1.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 1.0
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 1.0
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 1.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 1.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 1.0
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.5,
+        "cand_soft": 0.5,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 2.0
+      },
+      "score": 0.5,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.2,
+        "cand_soft": 0.3,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 2.0
+      },
+      "score": 0.3,
+      "result": {
+        "action": "reject",
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.9,
+        "cand_soft": 0.95,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 2.0
+      },
+      "score": 0.95,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 0.95,
+        "best_skill": "candidate",
+        "best_score": 0.95,
+        "best_step": 12
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.7,
+        "cand_soft": 0.7,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 2.0
+      },
+      "score": 0.7,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.7,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.8,
+        "cand_soft": 0.8,
+        "current_skill": "current",
+        "current_score": 0.5,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 2.0
+      },
+      "score": 0.8,
+      "result": {
+        "action": "accept",
+        "current_skill": "candidate",
+        "current_score": 0.8,
+        "best_skill": "best",
+        "best_score": 0.8,
+        "best_step": 7
+      }
+    },
+    {
+      "input": {
+        "candidate_skill": "candidate",
+        "cand_hard": 0.0,
+        "cand_soft": 1.0,
+        "current_skill": "current",
+        "current_score": 0.2,
+        "best_skill": "best",
+        "best_score": 0.6,
+        "best_step": 7,
+        "global_step": 12,
+        "metric": "mixed",
+        "mixed_weight": 2.0
+      },
+      "score": 1.0,
+      "result": {
+        "action": "accept_new_best",
+        "current_skill": "candidate",
+        "current_score": 1.0,
+        "best_skill": "candidate",
+        "best_score": 1.0,
+        "best_step": 12
+      }
+    }
+  ],
+  "unknownMetric": {
+    "metric": "unknown",
+    "errorType": "ValueError",
+    "message": "unknown gate metric 'unknown'; expected hard/soft/mixed"
+  }
+}
