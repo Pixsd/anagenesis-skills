@@ -25,9 +25,13 @@ export type {
   Mining,
   SleepRequest,
   SleepRunRequest,
+  SleepAdoptRequest,
+  SleepScheduleRequest,
+  SleepEvalkitRequest,
   SleepConfig,
   Transcript,
 } from "./schemas.js";
+export type { Adoption, MemoryProposal } from "./sleep/adopt.js";
 export type { NightRecord, NightState } from "./sleep/night.js";
 export { AnagenesisError } from "./errors.js";
 export { evaluateGate, selectGateScore } from "./gate.js";

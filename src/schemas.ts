@@ -312,8 +312,73 @@ export const sleepRunSchema = z
       .optional(),
   })
   .strict();
+export const sleepAdoptSchema = z
+  .object({
+    ...mutation,
+    action: z.literal("adopt"),
+    sleepId: uuidSchema,
+    author: identity,
+  })
+  .strict();
+const absolutePath = z
+  .string()
+  .min(1)
+  .max(4096)
+  .regex(/^\//)
+  .refine((s) => !/[\x00-\x1f\x7f]/.test(s), {
+    message: "Paths must be absolute and contain no control characters",
+  });
+export const sleepScheduleSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    action: z.literal("schedule"),
+    project: absolutePath,
+    runner: z
+      .string()
+      .min(1)
+      .max(10_000)
+      .regex(/^[^\x00-\x1f\x7f]+$/),
+    hour: z.number().int().min(0).max(23).default(3),
+    minute: z.number().int().min(0).max(59).default(17),
+  })
+  .strict();
+export const sleepEvalkitSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    action: z.literal("evalkit"),
+    manifest: absolutePath,
+    a: absolutePath,
+    b: absolutePath.optional(),
+    aa: z.boolean().default(false),
+    alpha: z.number().finite().gt(0).lt(1).optional(),
+    boot: z.number().int().min(1).max(1_000_000).optional(),
+    seed: z.number().int().optional(),
+    allowGraded: z.boolean().optional(),
+  })
+  .strict()
+  .refine((r) => r.aa !== (r.b !== undefined), {
+    message: "Specify exactly one of b or aa: true",
+  });
 export const sleepSchema = z.union([
   sleepRunSchema,
+  sleepAdoptSchema,
+  sleepScheduleSchema,
+  sleepEvalkitSchema,
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      action: z.literal("unschedule"),
+      project: absolutePath,
+      all: z.boolean().optional(),
+    })
+    .strict(),
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      action: z.literal("cleanup"),
+      sleepId: uuidSchema,
+    })
+    .strict(),
   z
     .object({
       schemaVersion: z.literal(1),
@@ -326,6 +391,8 @@ export const sleepSchema = z.union([
       schemaVersion: z.literal(1),
       action: z.literal("status"),
       sleepId: uuidSchema.optional(),
+      prune: z.boolean().optional(),
+      retentionDays: z.number().finite().min(0).default(30),
     })
     .strict(),
   z.object({ ...sleepInput, action: z.literal("harvest") }).strict(),
@@ -350,6 +417,9 @@ export type HistoryRequest = z.input<typeof historySchema>;
 export type ResolveRequest = z.input<typeof resolveSchema>;
 export type SleepRequest = z.input<typeof sleepSchema>;
 export type SleepRunRequest = z.infer<typeof sleepRunSchema>;
+export type SleepAdoptRequest = z.infer<typeof sleepAdoptSchema>;
+export type SleepScheduleRequest = z.infer<typeof sleepScheduleSchema>;
+export type SleepEvalkitRequest = z.infer<typeof sleepEvalkitSchema>;
 export type SleepConfig = z.infer<typeof sleepConfigSchema>;
 export type Transcript = z.infer<typeof transcriptSchema>;
 export type Analysis = z.infer<typeof analysisSchema>;
