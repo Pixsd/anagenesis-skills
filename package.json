@@ -19,13 +19,15 @@
     "vendor",
     "!**/__pycache__",
     "fixtures",
-    "python"
+    "python",
+    "README.md",
+    "examples"
   ],
   "scripts": {
     "build": "tsc",
     "prepack": "npm run build",
-    "format": "prettier --write src tests THIRD_PARTY_NOTICES.md package.json tsconfig.json",
-    "format:check": "prettier --check src tests THIRD_PARTY_NOTICES.md package.json tsconfig.json",
+    "format": "prettier --write src tests examples README.md THIRD_PARTY_NOTICES.md package.json tsconfig.json",
+    "format:check": "prettier --check src tests examples README.md THIRD_PARTY_NOTICES.md package.json tsconfig.json",
     "check": "npm run format:check && npm test",
     "test": "npm run build && node --test tests/*.test.mjs",
     "test:coverage": "npm run build && node --experimental-test-coverage --test tests/*.test.mjs",
