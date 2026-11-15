@@ -9,6 +9,7 @@ import {
   restore,
   recordFeedback,
   resolve,
+  sleep,
 } from "./api.js";
 import { fail, normalizeError, exitCode } from "./errors.js";
 async function main() {
@@ -42,7 +43,9 @@ async function main() {
         "restore",
         "feedback",
         "resolve",
+        "sleep",
       ],
+      sleepActions: ["run", "resume", "dry-run", "harvest", "status"],
       usage:
         "anagenesis COMMAND --store /absolute/store --request request.json|-; history/resolve: --skill ID [--version N | --cursor N --limit N]",
     };
@@ -79,6 +82,7 @@ async function main() {
     submit,
     restore,
     feedback: recordFeedback,
+    sleep,
   };
   if (!(command in commands)) fail("INVALID_INPUT", "Unknown command");
   let raw: string;

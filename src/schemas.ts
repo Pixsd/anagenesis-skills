@@ -234,6 +234,102 @@ export const resolveSchema = z
     version: version.optional(),
   })
   .strict();
+const transcriptText = z.string().max(200_000);
+export const transcriptSchema = z
+  .object({
+    sessionId: text.max(200),
+    project: text.max(4096),
+    gitBranch: z.string().max(1000).optional(),
+    startedAt: z.string().max(100).optional(),
+    endedAt: z.string().max(100).optional(),
+    userPrompts: z.array(transcriptText).max(1000).optional(),
+    assistantFinals: z.array(transcriptText).max(1000).optional(),
+    toolsUsed: z.array(z.string().max(1000)).max(1000).optional(),
+    skillsUsed: z.array(z.string().max(1000)).max(1000).optional(),
+    filesTouched: z.array(z.string().max(4096)).max(10_000).optional(),
+    feedbackSignals: z.array(z.string().max(10_000)).max(1000).optional(),
+  })
+  .strict();
+const fraction = z.number().finite().min(0).max(1);
+/** Microsoft skillopt_sleep configuration keys that Anagenesis lets callers
+ * set. Paths, backends, harvest sources and auto_adopt are fixed by the wrapper. */
+export const sleepConfigSchema = z
+  .object({
+    max_tasks_per_night: z.number().int().min(1).max(1000),
+    max_sessions_per_night: z.number().int().min(0).max(10_000),
+    max_tokens_per_night: z.number().int().min(1),
+    holdout_fraction: fraction,
+    val_fraction: fraction,
+    test_fraction: fraction,
+    gate_mode: z.enum(["on", "off"]),
+    gate_metric: z.enum(["hard", "soft", "mixed"]),
+    gate_mixed_weight: fraction,
+    gate_no_regression: z.boolean(),
+    edit_budget: z.number().int().min(1).max(50),
+    preferences: z.string().max(10_000),
+    dream_rollouts: z.number().int().min(1).max(16),
+    dream_factor: z.number().int().min(0).max(16),
+    recall_k: z.number().int().min(0).max(100),
+    evolve_memory: z.boolean(),
+    evolve_skill: z.boolean(),
+    llm_mine: z.boolean(),
+    target_task_filter: z.boolean(),
+    evidence_log: z.boolean(),
+    evidence_max_chars: z.number().int().min(0).max(1_000_000),
+    seed: z.number().int(),
+    slow_update: z.literal(false),
+  })
+  .partial()
+  .strict();
+const sleepSkills = z
+  .array(
+    z
+      .object({ skillId: skillIdSchema, expectedVersion: version.nullable() })
+      .strict(),
+  )
+  .max(32)
+  .refine(
+    (skills) => new Set(skills.map((s) => s.skillId)).size === skills.length,
+    {
+      message: "Skill ids must be unique",
+    },
+  );
+const sleepInput = {
+  schemaVersion: z.literal(1),
+  skills: sleepSkills.default([]),
+  transcripts: z.array(transcriptSchema).max(1000),
+  config: sleepConfigSchema.optional(),
+};
+export const sleepRunSchema = z
+  .object({
+    ...sleepInput,
+    action: z.enum(["run", "dry-run"]),
+    operationId: uuidSchema,
+    author: identity,
+    memory: z
+      .object({ label: text.max(200), text: z.string().max(1_000_000) })
+      .strict()
+      .optional(),
+  })
+  .strict();
+export const sleepSchema = z.union([
+  sleepRunSchema,
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      action: z.literal("resume"),
+      sleepId: uuidSchema,
+    })
+    .strict(),
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      action: z.literal("status"),
+      sleepId: uuidSchema.optional(),
+    })
+    .strict(),
+  z.object({ ...sleepInput, action: z.literal("harvest") }).strict(),
+]);
 export function parse<T>(schema: z.ZodType<T>, input: unknown): T {
   const result = schema.safeParse(input);
   if (!result.success)
@@ -252,6 +348,10 @@ export type RestoreRequest = z.input<typeof restoreSchema>;
 export type FeedbackRequest = z.input<typeof feedbackSchema>;
 export type HistoryRequest = z.input<typeof historySchema>;
 export type ResolveRequest = z.input<typeof resolveSchema>;
+export type SleepRequest = z.input<typeof sleepSchema>;
+export type SleepRunRequest = z.infer<typeof sleepRunSchema>;
+export type SleepConfig = z.infer<typeof sleepConfigSchema>;
+export type Transcript = z.infer<typeof transcriptSchema>;
 export type Analysis = z.infer<typeof analysisSchema>;
 export type Mining = z.infer<typeof miningSchema>;
 export type Policy = z.infer<typeof policySchema>;
