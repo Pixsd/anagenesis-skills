@@ -105,7 +105,9 @@ test("The macOS python3 stub is never executed without Command Line Tools", () =
         env: { PATH: path.dirname(MACOS_STUB) },
         platform: "darwin",
         hasCommandLineTools: () => false,
-        probe: (p) => (probed.push(p), "3.12"),
+        // Only the stub would qualify, so other interpreters on the host
+        // (Linux ships /usr/bin/python3.12) cannot satisfy the search.
+        probe: (p) => (probed.push(p), p === MACOS_STUB ? "3.12" : null),
       }),
     { code: "NOT_FOUND" },
   );
