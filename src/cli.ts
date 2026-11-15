@@ -45,7 +45,18 @@ async function main() {
         "resolve",
         "sleep",
       ],
-      sleepActions: ["run", "resume", "dry-run", "harvest", "status"],
+      sleepActions: [
+        "run",
+        "resume",
+        "dry-run",
+        "harvest",
+        "status",
+        "adopt",
+        "cleanup",
+        "schedule",
+        "unschedule",
+        "evalkit",
+      ],
       usage:
         "anagenesis COMMAND --store /absolute/store --request request.json|-; history/resolve: --skill ID [--version N | --cursor N --limit N]",
     };

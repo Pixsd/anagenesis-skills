@@ -3,6 +3,7 @@
 // rounds, keeps every byte inside the store and records each night's state.
 //
 // States: pending ⇄ pending → staged | rejected | idle | reported.
+// Adoption runs upstream once more; cleaned nights retain their receipts.
 import * as fs from "node:fs/promises";
 import path from "node:path";
 import { fail } from "../errors.js";
@@ -18,6 +19,8 @@ import {
   type Transcript,
 } from "../schemas.js";
 import { MANAGED_SKILL } from "./publish.js";
+import { adoptNight, cleanupNight, type Adoption } from "./adopt.js";
+import { sleepUtility } from "./utility.js";
 import { findPython, pythonEnv, runPython, type Python } from "./python.js";
 
 export type NightState =
@@ -25,7 +28,9 @@ export type NightState =
   | "staged"
   | "rejected"
   | "idle"
-  | "reported";
+  | "reported"
+  | "adopted"
+  | "cleaned";
 export interface NightRecord {
   schemaVersion: 1;
   sleepId: string;
@@ -41,6 +46,7 @@ export interface NightRecord {
   };
   skills?: NightRecord["skill"][];
   memory?: { label: string; baseSha256: string };
+  adoption?: Adoption;
   feedbackIds: string[];
   config: SleepConfig;
   state: NightState;
@@ -50,7 +56,14 @@ export interface NightRecord {
   reason?: string;
 }
 
-const TERMINAL: NightState[] = ["staged", "rejected", "idle", "reported"];
+const TERMINAL: NightState[] = [
+  "staged",
+  "rejected",
+  "idle",
+  "reported",
+  "adopted",
+  "cleaned",
+];
 /** Fewer LLM-mined tasks than this ends the night idle (owner decision). */
 export const MIN_MINED_TASKS = 3;
 const ROUND_TIMEOUT_MS = 30 * 60_000;
@@ -104,6 +117,7 @@ export function view(s: Store, night: NightRecord) {
       : {}),
     ...(night.reason ? { reason: night.reason } : {}),
     ...(night.result ? { result: night.result } : {}),
+    ...(night.adoption?.completed ? { adoption: night.adoption } : {}),
   };
 }
 
@@ -567,12 +581,27 @@ async function advance(s: Store, night: NightRecord) {
 export async function sleepNight(s: Store, input: unknown) {
   const req = parse(sleepSchema, input);
   if (req.action === "status") {
-    if (req.sleepId) return view(s, await readNight(s, req.sleepId));
+    const prune = async (id: string) => {
+      if (!req.prune) return readNight(s, id);
+      return s.lock("sleep:" + id, async () => {
+        const night = await readNight(s, id);
+        if (
+          ["adopted", "cleaned", "rejected", "idle", "reported"].includes(
+            night.state,
+          ) &&
+          Date.now() - Date.parse(night.createdAt) >=
+            req.retentionDays * 86_400_000
+        )
+          await cleanupNight(s, night);
+        return night;
+      });
+    };
+    if (req.sleepId) return view(s, await prune(req.sleepId));
     const root = path.join(s.root, "sleep", "nights");
     const ids = (await exists(root)) ? (await fs.readdir(root)).sort() : [];
     const nights = [];
     for (const id of ids)
-      if (await exists(paths(s, id).run)) nights.push(await readNight(s, id));
+      if (await exists(paths(s, id).run)) nights.push(await prune(id));
     return {
       status: "listed",
       nights: nights
@@ -603,6 +632,19 @@ export async function sleepNight(s: Store, input: unknown) {
       transcripts: withFeedback(req.transcripts, feedback, ""),
     };
   }
+  if (
+    req.action === "schedule" ||
+    req.action === "unschedule" ||
+    req.action === "evalkit"
+  )
+    return sleepUtility(s, req);
+  if (req.action === "adopt" || req.action === "cleanup")
+    return s.lock("sleep:" + req.sleepId, async () => {
+      const night = await readNight(s, req.sleepId);
+      if (req.action === "adopt") await adoptNight(s, night, req);
+      else await cleanupNight(s, night);
+      return view(s, night);
+    });
   if (req.action === "resume")
     return s.lock("sleep:" + req.sleepId, async () =>
       view(s, await advance(s, await readNight(s, req.sleepId))),
