@@ -30,8 +30,20 @@ Expect around ten rounds. If you are interrupted, `resume` with the same `sleepI
 
 ## Adopt
 
-Send `adopt` (template: sleep-adopt) only after the user explicitly approves. The response ends `cleaned` with `adoption.publications` (the new version per skill, marked `kind: "sleep"`).
+Send `adopt` (template: sleep-adopt) only after the user explicitly approves. If the user declines, send `discard` (template: sleep-discard): nothing is published and the night ends `cleaned`. The response ends `cleaned` with `adoption.publications` (the new version per skill, marked `kind: "sleep"`).
 
 If `adoption.memory` is present: compute `anagenesis digest --file <your memory file>`. Apply `adoption.memory.text` only if the digest equals `adoption.memory.baseSha256`; otherwise the file changed since the night started, so show the proposal to the user instead.
 
 Sleep versions carry weaker evidence than a submit: the same model mined, ran and judged the tasks.
+
+## Nightly runs
+
+You may offer to run Sleep every night. Ask the user whether, at what time (suggest 03:17 local time) and for which skills, and say that each night costs about ten rounds of subagents. Anagenesis installs nothing: you set the job up with whatever scheduler your environment offers.
+
+- **Will it be there?** If this environment will not exist at that hour (an ephemeral container or sandbox), or you cannot run without a user, say so and install nothing.
+- **The job** starts you unattended with an instruction that carries what was agreed: the store, the skills, whether memory is included, and "run one night as `sleep.md` describes". The agent it starts needs this skill installed. Use absolute paths and an explicit `--store`, grant in advance only the permissions a night needs, and append output to a log file. Never put credentials in the command; rely on your own login.
+- **Try it first.** Run the exact command once while the user is present, and install it only if it reaches a terminal state without asking for anything. Review or discard that night with the user, or the first scheduled night will wait behind it.
+- **Install with consent.** Show the user the exact entry and where it goes; add it only after they agree and leave every other job untouched. Tell them the log path and how to remove the entry. Later, change or remove only that entry, and only when asked. Do not use `action: "schedule"`: it writes cron text inside the store without the user's other jobs, and that text must never be installed as a crontab.
+- **Each night**, send `status` first. Resume a `pending` night instead of starting one. If a `staged` night is waiting for the user, start nothing. Otherwise run with the sessions since the last night's `createdAt`, leaving out the nightly sessions themselves. On `STORE_BUSY`, wait and resend the same file; after a few tries, log it and stop.
+- **Never adopt at night.** Agreeing to a schedule is not approving a proposal: the night ends `staged`, `rejected` or `idle` and waits. Never apply memory edits unattended.
+- **Afterwards**, show each `staged` night to the user (`status` with its `sleepId` returns the result). Approved: Adopt. Declined: discard, so the next night can start.

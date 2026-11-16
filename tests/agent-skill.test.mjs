@@ -171,6 +171,7 @@ test("Every template the skill names exists and matches the request schemas", ()
     "sleep-run": sleepSchema,
     "sleep-resume": sleepSchema,
     "sleep-adopt": sleepSchema,
+    "sleep-discard": sleepSchema,
   };
   for (const [name, schema] of Object.entries(schemas)) {
     const parsed = schema.safeParse(templates[name]);
@@ -339,6 +340,35 @@ test(
       record.memory.baseSha256,
       ok(cliRun(["digest", "--file", memory])).digest,
     );
+  },
+);
+
+test(
+  "A nightly run finds open nights with status and frees the store with discard",
+  sleepOpts,
+  async (t) => {
+    const { store } = await publishFirst(t);
+    const status = { schemaVersion: 1, action: "status" };
+    assert.deepEqual(ok(request(store, "sleep", status)).nights, []);
+    const run = template("sleep-run");
+    run.operationId = crypto.randomUUID();
+    run.skills = [{ skillId: "zoho-mail", expectedVersion: 1 }];
+    const night = ok(request(store, "sleep", run));
+    const [open] = ok(request(store, "sleep", status)).nights;
+    assert.equal(open.sleepId, night.sleepId);
+    assert.equal(open.status, "pending");
+    assert.ok(!Number.isNaN(Date.parse(open.createdAt)));
+    const discard = template("sleep-discard");
+    discard.sleepId = night.sleepId;
+    const dropped = ok(request(store, "sleep", discard));
+    assert.equal(dropped.status, "cleaned");
+    assert.equal(dropped.reason, "discarded");
+    const [closed] = ok(request(store, "sleep", status)).nights;
+    assert.equal(closed.status, "cleaned");
+    const history = ok(
+      cliRun(["history", "--store", store, "--skill", "zoho-mail"]),
+    );
+    assert.equal(history.revisions.length, 1);
   },
 );
 

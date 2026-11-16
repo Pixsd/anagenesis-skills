@@ -374,6 +374,50 @@ test(
 );
 
 test(
+  "discard drops a pending or staged night without publishing, idempotently",
+  opts,
+  async (t) => {
+    const { store, view, request } = await staged(t);
+    await assert.rejects(
+      sleep(store, { ...action(view.sleepId, "discard"), force: true }),
+      { code: "INVALID_INPUT" },
+    );
+    const discarded = await sleep(store, action(view.sleepId, "discard"));
+    assert.equal(discarded.status, "cleaned");
+    assert.equal(discarded.reason, "discarded");
+    assert.equal(store.chain(request.skillId).length, 1);
+    assert.deepEqual(
+      await sleep(store, action(view.sleepId, "discard")),
+      discarded,
+    );
+    assert.deepEqual((await fs.readdir(rootOf(store, view))).sort(), [
+      "report.json",
+      "run.json",
+    ]);
+    await assert.rejects(sleep(store, adopt(view.sleepId)), {
+      code: "VALIDATION_FAILED",
+    });
+
+    const pending = await sleep(store, run());
+    assert.equal(pending.status, "pending");
+    const dropped = await sleep(store, action(pending.sleepId, "discard"));
+    assert.equal(dropped.status, "cleaned");
+    assert.equal(dropped.reason, "discarded");
+    // A discarded night is terminal: resume returns it unchanged.
+    assert.deepEqual(
+      await sleep(store, action(pending.sleepId, "resume")),
+      dropped,
+    );
+
+    const flat = await night(store, run({ transcripts: [] }), "flat");
+    assert.equal(flat.status, "idle");
+    await assert.rejects(sleep(store, action(flat.sleepId, "discard")), {
+      code: "VALIDATION_FAILED",
+    });
+  },
+);
+
+test(
   "a partial multi-skill publication resumes the missing skills",
   opts,
   async (t) => {

@@ -572,3 +572,15 @@ Send only after the user approved the staged proposal.
   }
 }
 ```
+
+## sleep-discard
+
+Send only after the user declined a staged proposal, or to drop a pending night. Nothing is published; the night ends `cleaned` with `reason: "discarded"`.
+
+```json sleep-discard
+{
+  "schemaVersion": 1,
+  "action": "discard",
+  "sleepId": "8d4bb70b-9abd-4efd-98e9-8ef1b6679999"
+}
+```

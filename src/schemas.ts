@@ -382,6 +382,13 @@ export const sleepSchema = z.union([
   z
     .object({
       schemaVersion: z.literal(1),
+      action: z.literal("discard"),
+      sleepId: uuidSchema,
+    })
+    .strict(),
+  z
+    .object({
+      schemaVersion: z.literal(1),
       action: z.literal("resume"),
       sleepId: uuidSchema,
     })

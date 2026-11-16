@@ -60,7 +60,7 @@ Python ≥ 3.10 is required **only** by `sleep`: no pip packages, no venv. Every
 
 ### 3.1 One command: `anagenesis sleep --store … --request r.json|-`
 
-Strict schema, union on `action`: `run`, `resume`, `dry-run`, `harvest`, `status`, `adopt`, `schedule`, `unschedule`, `evalkit`.
+Strict schema, union on `action`: `run`, `resume`, `dry-run`, `harvest`, `status`, `adopt`, `cleanup`, `discard`, `schedule`, `unschedule`, `evalkit`.
 
 ```ts
 { schemaVersion: 1, action: "run", operationId /* = sleepId */, author,
