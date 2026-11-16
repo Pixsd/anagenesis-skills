@@ -60,7 +60,7 @@ anagenesis install-skill --store /absolute/path/skill-store
 - `--agent claude` or `--agent agents` writes one location only.
 - `--store PATH` saves the default store in `~/.config/anagenesis/config.json` (`$XDG_CONFIG_HOME` and `ANAGENESIS_CONFIG` are honoured).
 
-Reinstalling replaces the folder atomically; a folder with the same name that holds a different skill is refused with `ALREADY_EXISTS`. The response lists the folders written and warns when `anagenesis` is not on `PATH`, no store is set or Python is missing for `sleep`. Start a new agent session afterwards so the skill is listed. For an agent without skill support, add to its `AGENTS.md`: "Before creating, fixing, using or restoring skills, read `<folder>/SKILL.md` and follow it."
+Reinstalling copies the skill beside the folder and then swaps it in, so an agent never reads half a skill; the folder is briefly absent during the swap. A damaged copy of this skill (no `SKILL.md`, only files the skill ships) is repaired. A folder with the same name that holds a different skill or any other file is refused with `ALREADY_EXISTS`. The response lists the folders written and warns when `anagenesis` is not on `PATH`, no store is set or Python is missing for `sleep`. Start a new agent session afterwards so the skill is listed. For an agent without skill support, add to its `AGENTS.md`: "Before creating, fixing, using or restoring skills, read `<folder>/SKILL.md` and follow it."
 
 The skill folder also works with generic installers, for example `npx skills add <repository> --skill anagenesis`, or by copying `skills/anagenesis` by hand.
 
