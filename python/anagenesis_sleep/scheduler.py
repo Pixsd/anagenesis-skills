@@ -1,4 +1,8 @@
-"""Crontab I/O redirected to files in the store; the host installs the result."""
+"""Crontab I/O redirected to files in the store.
+
+The host's crontab is never read, so the result holds only Anagenesis entries:
+the host merges it into its own schedule and never installs it whole.
+"""
 from __future__ import annotations
 
 import os
