@@ -365,6 +365,8 @@ test("digest hashes trees and regular files and refuses special files", async (t
     [["--file", fifo], "INVALID_INPUT"],
     [["--file", dir], "INVALID_INPUT"],
     [["--file", path.join(dir, "absent")], "NOT_FOUND"],
+    [["--path", path.join(dir, "absent")], "NOT_FOUND"],
+    [["--path", file], "INVALID_INPUT"],
     [[], "INVALID_INPUT"],
     [["--path", tree, "--file", file], "INVALID_INPUT"],
     [["--path", tree, "--store", dir], "INVALID_INPUT"],
@@ -450,6 +452,17 @@ test("install-skill puts the skill where agents look and saves the store", async
     { env },
   );
   assert.equal(refused.json.error?.code, "ALREADY_EXISTS");
+  // A damaged copy of ours (SKILL.md gone) is repaired; an unknown file is not.
+  const damaged = path.join(project, ".claude", "skills", "anagenesis");
+  await fs.mkdir(path.join(damaged, "references"), { recursive: true });
+  await fs.writeFile(path.join(damaged, "references", "sleep.md"), "partial");
+  await fs.writeFile(path.join(damaged, "notes.txt"), "mine");
+  const kept = cliRun(
+    ["install-skill", "--agent", "claude", "--project", project],
+    { env },
+  );
+  assert.equal(kept.json.error?.code, "ALREADY_EXISTS");
+  await fs.rm(path.join(damaged, "notes.txt"));
   const projectClaude = ok(
     cliRun(["install-skill", "--agent", "claude", "--project", project], {
       env,
