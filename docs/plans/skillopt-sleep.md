@@ -113,7 +113,7 @@ Imports the vendor without modifying it; `__main__` installs the overrides, **as
 
 - `ingest`: validates transcripts, builds and redacts `SessionDigest`; overrides `skillopt_sleep.__main__.harvest_for_config` so `harvest` reads them.
 - Rollouts: `HandoffBackend` subclass that appends a rollout-index line when `sample_id > 0` (ids identical to upstream for 0). Tool-using attempts and `evidence.jsonl` keep upstream behaviour; documented.
-- Scheduler: overrides `_have_crontab`, `_read_crontab`, `_write_crontab`, `_runner_cmd`, plus a fake `crontab` first on `PATH` as a safety net. The result goes to `sleep/schedule/crontab` and to JSON stdout; the caller installs it.
+- Scheduler: overrides `_have_crontab`, `_read_crontab`, `_write_crontab`, `_runner_cmd`, plus a fake `crontab` first on `PATH` as a safety net. The result goes to `sleep/schedule/crontab` and to JSON stdout. It never contains the host's other entries, so the caller merges it into its own schedule instead of installing it whole.
 - `slow_update`: **not implemented now** (needs replay pairs upstream does not keep and would bypass the gate); the key is accepted only as `false`.
 
 ### 3.6 Adopt and provenance
