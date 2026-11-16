@@ -34,16 +34,48 @@ To install the package locally:
 npm pack
 npm install -g ./anagenesis-skills-0.1.0.tgz
 anagenesis --help
+anagenesis install-skill --store /absolute/path/skill-store
 ```
 
 The name `anagenesis-skills` is provisional: npm availability and scope are unverified. The package is MIT-licensed and still `private: true` until a public name is chosen. Nothing has been published to npm.
+
+## Agent skill
+
+The package ships the instructions an agent needs to use it: [`skills/anagenesis`](skills/anagenesis/SKILL.md). The skill tells the agent when to call each command, how to keep author, examiner, runner and judge apart with subagents, how to answer Sleep prompts and when to ask the user. Its [request templates](skills/anagenesis/references/requests.md) are checked against the schemas, and the tests replay its procedures through the CLI.
+
+The skill follows the [Agent Skills](https://agentskills.io) format: a folder with a `SKILL.md` whose frontmatter has `name` and `description`. Agents read only the name and description at session start and load the body when a task matches. Install it once, after installing the package:
+
+```sh
+anagenesis install-skill --store /absolute/path/skill-store
+```
+
+| Folder written                | Read by                                             |
+| ----------------------------- | --------------------------------------------------- |
+| `~/.claude/skills/anagenesis` | Claude Code                                         |
+| `~/.agents/skills/anagenesis` | Codex, Gemini CLI, Cursor, GitHub Copilot, OpenCode |
+
+`.agents/skills` is the cross-client location of the Agent Skills standard; Claude Code reads only `.claude/skills`, so both are written. Options:
+
+- `--project DIR` installs into `DIR/.claude/skills` and `DIR/.agents/skills` instead, to commit the skill with a repository.
+- `--agent claude` or `--agent agents` writes one location only.
+- `--store PATH` saves the default store in `~/.config/anagenesis/config.json` (`$XDG_CONFIG_HOME` and `ANAGENESIS_CONFIG` are honoured).
+
+Reinstalling replaces the folder atomically; a folder with the same name that holds a different skill is refused with `ALREADY_EXISTS`. The response lists the folders written and warns when `anagenesis` is not on `PATH`, no store is set or Python is missing for `sleep`. Start a new agent session afterwards so the skill is listed. For an agent without skill support, add to its `AGENTS.md`: "Before creating, fixing, using or restoring skills, read `<folder>/SKILL.md` and follow it."
+
+The skill folder also works with generic installers, for example `npx skills add <repository> --skill anagenesis`, or by copying `skills/anagenesis` by hand.
+
+Store resolution for every command except `digest` and `install-skill`: `--store`, then `ANAGENESIS_STORE`, then the saved config. Without any of them the command fails with `INVALID_INPUT`.
+
+An agent without the skill usually starts from `anagenesis --help` or from that missing-store error, so both carry a `skill` object: `installed`, the folders where the skill was `found`, or a `hint` with the install command. The CLI looks in the user folders and in `.claude/skills` and `.agents/skills` from the working directory up; copies made elsewhere are not seen, so the field is only a hint. Other responses never carry it, and nothing is printed outside the JSON document.
+
+`anagenesis digest --path DIR` returns the tree digest of a skill directory and `anagenesis digest --file FILE` the SHA-256 of a regular file, so agents can fill `expectedDigest`, `candidateDigest`, `inputDigest`, artifact keys and memory hashes without importing the library.
 
 ## Agent flow
 
 1. Prepare a `create` request, or an `improve` request with `expectedVersion` and the selected `feedbackIds`. Objective, sources, examples, audience, boundaries, criteria and policy are explicit.
 2. Read the returned `briefPath`. Write or edit `workspacePath/SKILL.md`, without extra logins or restarts. Create prepares the directory; it does not invent the skill content. Improve copies the whole tree of the base revision.
 3. Have your evaluator score baseline and candidate on the same cases with identical settings. The package does not orchestrate these runs.
-4. Compute the tree digest and send `submit` with manifest and evidence. A `published` outcome carries version and commit; `rejected` carries reasons and the index of the next available holdout.
+4. Compute the tree digest (`anagenesis digest --path`) and send `submit` with manifest and evidence. A `published` outcome carries version and commit; `rejected` carries reasons and the index of the next available holdout.
 5. Use `resolve` to read the snapshot of the active revision or of a specific version.
 
 Complete requests and manifest construction are in the [runnable example](examples/workflow.mjs); the exported types and the [schemas](src/schemas.ts) describe every field. Objects reject unknown properties: an alternative policy cannot be passed to `submit`.
@@ -104,10 +136,13 @@ anagenesis feedback --store /absolute/path/skill-store --request feedback.json
 anagenesis restore --store /absolute/path/skill-store --request restore.json
 anagenesis history --store /absolute/path/skill-store --skill demo-skill --limit 10
 anagenesis resolve --store /absolute/path/skill-store --skill demo-skill --version 1
+anagenesis digest --path /absolute/path/workspace/skill
+anagenesis digest --file /absolute/path/answer.txt
+anagenesis install-skill --store /absolute/path/skill-store
 cat create.json | anagenesis create --store /absolute/path/skill-store --request -
 ```
 
-Stdout carries a single JSON document; diagnostics are never mixed with results. There are no interactive prompts on stdin. The CLI JSON limit is 32 MiB.
+`--store` can be omitted once `ANAGENESIS_STORE` or `install-skill --store` sets a default. Each command accepts only its own options. Stdout carries a single JSON document; diagnostics are never mixed with results. There are no interactive prompts on stdin. The CLI JSON limit is 32 MiB.
 
 | Exit code | Meaning                                                              |
 | --------- | -------------------------------------------------------------------- |
