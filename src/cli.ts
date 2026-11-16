@@ -79,6 +79,7 @@ async function main() {
         "status",
         "adopt",
         "cleanup",
+        "discard",
         "schedule",
         "unschedule",
         "evalkit",

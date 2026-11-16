@@ -95,6 +95,8 @@ export async function sleepUtility(
       await atomicWrite(crontabPath, crontab);
       return {
         status: req.action === "schedule" ? "scheduled" : "unscheduled",
+        // Only the store file changed: no job was installed or cancelled.
+        installed: false,
         crontabPath,
         crontab,
       };

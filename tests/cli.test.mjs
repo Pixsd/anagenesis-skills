@@ -129,6 +129,7 @@ test("CLI Sleep adoption and utilities use JSON requests, clean up and report er
     }),
   );
   assert.equal(scheduled.status, 0);
+  assert.equal(scheduled.json.installed, false);
   assert.match(scheduled.json.crontab, /my-agent sleep/);
   assert.equal(
     run(
