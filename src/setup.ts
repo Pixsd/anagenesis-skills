@@ -18,7 +18,14 @@ const digestLimits = {
 };
 
 export async function treeDigest(dir: string) {
-  const tree = await snapshotTree(path.resolve(dir), digestLimits);
+  const root = path.resolve(dir);
+  const stat = await fs.lstat(root).catch((e: NodeJS.ErrnoException) => {
+    if (e.code === "ENOENT") return fail("NOT_FOUND", "Directory not found");
+    throw e;
+  });
+  if (!stat.isDirectory())
+    fail("INVALID_INPUT", "digest --path needs a directory");
+  const tree = await snapshotTree(root, digestLimits);
   return {
     algorithm: tree.algorithm,
     digest: tree.digest,
@@ -124,6 +131,20 @@ async function skillName(dir: string) {
   }
 }
 
+/** A folder install-skill may overwrite: our skill, or a damaged copy of it
+ * (SKILL.md gone) holding only paths our skill ships. Anything else, another
+ * skill included, may be someone's work, so it stays untouched. */
+async function replaceable(dest: string) {
+  if ((await skillName(dest)) === "anagenesis") return true;
+  const stat = await fs.lstat(dest);
+  if (!stat.isDirectory() || stat.isSymbolicLink()) return false;
+  const ours = new Set(await fs.readdir(skillSource, { recursive: true }));
+  const theirs = await fs.readdir(dest, { recursive: true });
+  return (
+    !theirs.includes("SKILL.md") && theirs.every((entry) => ours.has(entry))
+  );
+}
+
 function onPath(command: string, env = process.env) {
   return (env.PATH ?? "")
     .split(path.delimiter)
@@ -161,7 +182,7 @@ export async function installSkill(options: {
   for (const key of chosen) {
     const dest = path.join(base, targets[key].dir, "anagenesis");
     const existing = await fs.lstat(dest).catch(() => null);
-    if (existing && (await skillName(dest)) !== "anagenesis")
+    if (existing && !(await replaceable(dest)))
       fail("ALREADY_EXISTS", "Another skill already uses this folder", {
         path: dest,
       });
