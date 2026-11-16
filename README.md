@@ -6,6 +6,22 @@ TypeScript package and CLI for preparing, verifying and publishing **local skill
 - **SkillForge** diagnoses failures and requires every change to be justified.
 - **Anagenesis** stores, versions and protects: a dedicated Git store, evidence-gated publication, provenance and crash-safe transactions.
 
+```mermaid
+flowchart LR
+  use["1 · An agent uses the skill<br/>and leaves feedback"]
+  day["2a · By day<br/>the agent fixes it;<br/>SkillForge requires a diagnosis"]
+  night["2b · At night<br/>Microsoft SkillOpt Sleep<br/>replays sessions, proposes edits"]
+  gate{"3 · Gate<br/>better on held-out cases?"}
+  store[("4 · Git store<br/>new version,<br/>old ones kept")]
+
+  use --> day --> gate
+  use --> night --> gate
+  gate -->|yes| store
+  store -->|next use| use
+```
+
+Skills do not stay frozen: every use can feed the next version. A change that fails the gate publishes nothing, and any earlier version can be restored as a new one.
+
 The calling agent writes `SKILL.md` in its own session, with its own model and login, and is also the model that answers Sleep prompts. Anagenesis keeps the evidence and applies deterministic checks; it never calls LLM APIs, never starts agents and never runs the scripts attached to a skill.
 
 It implements the [technical contract](SKILL_PACKAGE_CONTRACT.md). Publishing a revision means activating it in the local store, not publishing a package to npm.
