@@ -1,6 +1,6 @@
 ---
 name: anagenesis
-description: Create, fix, evaluate, version, restore and use agent skills through the anagenesis CLI, and run SkillOpt Sleep nights that learn from past sessions. Use whenever the user asks to make a new skill, correct a skill after a mistake, improve a skill from recent sessions, roll a skill back, or use a skill kept in an Anagenesis store.
+description: Create, fix, evaluate, version, restore and use agent skills through the anagenesis CLI, and run SkillOpt Sleep nights, once or every night, that learn from past sessions. Use whenever the user asks to make a new skill, correct a skill after a mistake, improve a skill from recent sessions, roll a skill back, or use a skill kept in an Anagenesis store.
 ---
 
 # Anagenesis
@@ -62,6 +62,8 @@ When a resolved skill misbehaves or the user corrects you, send `feedback` (temp
 ## Learn from past sessions (Sleep)
 
 Follow [references/sleep.md](references/sleep.md): run, answer every pending prompt with a fresh subagent, resume until a terminal state, show the result to the user, and adopt only after explicit approval.
+
+You may offer to run Sleep every night (`sleep.md`, "Nightly runs"). Whenever you start Anagenesis work, send `sleep` with `{"schemaVersion": 1, "action": "status"}`; if a night is `staged`, show it to the user before anything else.
 
 ## Roll back
 

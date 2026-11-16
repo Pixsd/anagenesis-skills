@@ -34,6 +34,7 @@ test(
     };
     const result = await sleep(store, req);
     assert.equal(result.status, "scheduled");
+    assert.equal(result.installed, false);
     assert.equal(
       result.crontabPath,
       path.join(store.root, "sleep", "schedule", "crontab"),

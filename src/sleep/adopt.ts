@@ -468,9 +468,29 @@ export async function adoptNight(
   await cleanupNight(s, night);
 }
 
+/** Drop a pending or staged night the user declined. Nothing is published;
+ * the night ends cleaned with reason "discarded", so a new one can start. */
+export async function discardNight(s: Store, night: NightRecord) {
+  if (night.state === "cleaned" && night.reason === "discarded") return;
+  if (night.state !== "pending" && night.state !== "staged")
+    fail(
+      "VALIDATION_FAILED",
+      "Only a pending or staged night can be discarded",
+    );
+  if (night.adoption)
+    fail("VALIDATION_FAILED", "Adoption has started: finish it with adopt");
+  night.reason = "discarded";
+  await cleanupNight(s, night, true);
+}
+
 /** Keep the durable result and report; the shared redacted task archive stays. */
-export async function cleanupNight(s: Store, night: NightRecord) {
+export async function cleanupNight(
+  s: Store,
+  night: NightRecord,
+  discard = false,
+) {
   if (
+    !discard &&
     !["adopted", "cleaned", "rejected", "idle", "reported"].includes(
       night.state,
     )

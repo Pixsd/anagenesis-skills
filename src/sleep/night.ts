@@ -19,7 +19,12 @@ import {
   type Transcript,
 } from "../schemas.js";
 import { MANAGED_SKILL } from "./publish.js";
-import { adoptNight, cleanupNight, type Adoption } from "./adopt.js";
+import {
+  adoptNight,
+  cleanupNight,
+  discardNight,
+  type Adoption,
+} from "./adopt.js";
 import { sleepUtility } from "./utility.js";
 import { findPython, pythonEnv, runPython, type Python } from "./python.js";
 
@@ -662,10 +667,15 @@ export async function sleepNight(s: Store, input: unknown) {
     req.action === "evalkit"
   )
     return sleepUtility(s, req);
-  if (req.action === "adopt" || req.action === "cleanup")
+  if (
+    req.action === "adopt" ||
+    req.action === "cleanup" ||
+    req.action === "discard"
+  )
     return s.lock("sleep:" + req.sleepId, async () => {
       const night = await readNight(s, req.sleepId);
       if (req.action === "adopt") await adoptNight(s, night, req);
+      else if (req.action === "discard") await discardNight(s, night);
       else await cleanupNight(s, night);
       return view(s, night);
     });
