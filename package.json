@@ -4,6 +4,25 @@
   "description": "Local, evidence-gated skill revisions for agent CLIs",
   "type": "module",
   "license": "MIT",
+  "author": "Pixsd",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pixsd/anagenesis-skills.git"
+  },
+  "homepage": "https://github.com/Pixsd/anagenesis-skills#readme",
+  "bugs": {
+    "url": "https://github.com/Pixsd/anagenesis-skills/issues"
+  },
+  "keywords": [
+    "agent",
+    "skills",
+    "claude-code",
+    "codex",
+    "skillforge",
+    "skillopt",
+    "cli",
+    "llm"
+  ],
   "engines": {
     "node": ">=22"
   },
@@ -53,6 +72,5 @@
     "@types/node": "^22.0.0",
     "prettier": "3.8.1",
     "typescript": "^5.9.0"
-  },
-  "private": true
+  }
 }
