@@ -44,16 +44,15 @@ node examples/sleep.mjs
 
 The examples use synthetic attestations or scripted answers, create temporary stores outside the repository and print the published revisions. They demonstrate the local workflows, without measuring real model improvement. The printed paths let you inspect the stores; the directories stay until you remove them. Both examples accept an absolute store path as their first argument.
 
-To install the package locally:
+To install the package from npm:
 
 ```sh
-npm pack
-npm install -g ./anagenesis-skills-0.1.0.tgz
+npm install -g anagenesis-skills
 anagenesis --help
 anagenesis install-skill --store /absolute/path/skill-store
 ```
 
-The name `anagenesis-skills` is provisional: npm availability and scope are unverified. The package is MIT-licensed and still `private: true` until a public name is chosen. Nothing has been published to npm.
+To install a local build instead, run `npm pack` and then `npm install -g ./anagenesis-skills-<version>.tgz`.
 
 ## Agent skill
 
