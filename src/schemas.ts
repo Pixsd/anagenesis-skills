@@ -294,6 +294,18 @@ const sleepSkills = z
       message: "Skill ids must be unique",
     },
   );
+/** The models the caller will use for each kind of prompt. Anagenesis never
+ * calls a model: the names are opaque, pinned with the night and echoed back
+ * so every round and every resume routes the same way. */
+export const sleepModelsSchema = z
+  .object({
+    attempt: text.max(200),
+    judge: text.max(200),
+    miner: text.max(200),
+    reflect: text.max(200),
+  })
+  .partial()
+  .strict();
 const sleepInput = {
   schemaVersion: z.literal(1),
   skills: sleepSkills.default([]),
@@ -306,6 +318,7 @@ export const sleepRunSchema = z
     action: z.enum(["run", "dry-run"]),
     operationId: uuidSchema,
     author: identity,
+    models: sleepModelsSchema.optional(),
     memory: z
       .object({ label: text.max(200), text: z.string().max(1_000_000) })
       .strict()
@@ -428,6 +441,7 @@ export type SleepAdoptRequest = z.infer<typeof sleepAdoptSchema>;
 export type SleepScheduleRequest = z.infer<typeof sleepScheduleSchema>;
 export type SleepEvalkitRequest = z.infer<typeof sleepEvalkitSchema>;
 export type SleepConfig = z.infer<typeof sleepConfigSchema>;
+export type SleepModels = z.infer<typeof sleepModelsSchema>;
 export type Transcript = z.infer<typeof transcriptSchema>;
 export type Analysis = z.infer<typeof analysisSchema>;
 export type Mining = z.infer<typeof miningSchema>;

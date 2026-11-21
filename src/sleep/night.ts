@@ -15,6 +15,7 @@ import {
   sleepSchema,
   type FeedbackRequest,
   type SleepConfig,
+  type SleepModels,
   type SleepRunRequest,
   type Transcript,
 } from "../schemas.js";
@@ -56,7 +57,8 @@ export interface NightRecord {
   config: SleepConfig;
   state: NightState;
   rounds: number;
-  pending?: { count: number };
+  models?: SleepModels;
+  pending?: { count: number; items?: { id: string; kind: Kind }[] };
   result?: Record<string, unknown>;
   reason?: string;
 }
@@ -95,6 +97,18 @@ export async function readNight(s: Store, id: string): Promise<NightRecord> {
   const night = await readJson<NightRecord>(p);
   if (night.schemaVersion !== 1 || night.sleepId !== id)
     fail("STORE_CORRUPT", "Sleep night record is invalid");
+  // Nights saved before prompts carried a kind: rebuild it from the handoff.
+  const handoff = path.join(paths(s, id).handoff, "pending.json");
+  if (night.state === "pending" && night.pending && !night.pending.items)
+    if (await exists(handoff)) {
+      const { pending } = await readJson<{
+        pending: { id: string; prompt: string }[];
+      }>(handoff);
+      night.pending.items = pending.map((i) => ({
+        id: i.id,
+        kind: promptKind(i.prompt),
+      }));
+    }
   return night;
 }
 export const writeNight = (s: Store, night: NightRecord) =>
@@ -114,6 +128,8 @@ export function view(s: Store, night: NightRecord) {
       ? {
           pending: {
             count: night.pending?.count ?? 0,
+            items: night.pending?.items ?? [],
+            ...(night.models ? { models: night.models } : {}),
             pendingPath: path.join(p.handoff, "pending.json"),
             promptsPath: path.join(p.handoff, "PROMPTS.md"),
             answersDir: path.join(p.handoff, "answers"),
@@ -290,6 +306,7 @@ async function pinNight(
         },
         feedbackIds: feedback.map((f) => f.feedbackId),
         config: req.config ?? {},
+        ...(req.models ? { models: req.models } : {}),
         state: "pending",
         rounds: 0,
       };
@@ -300,7 +317,7 @@ async function pinNight(
 }
 
 // ── answers ─────────────────────────────────────────────────────────────
-type Kind = "miner" | "attempt" | "judge" | "reflect" | "other";
+export type Kind = "miner" | "attempt" | "judge" | "reflect" | "other";
 export function promptKind(prompt: string): Kind {
   if (prompt.startsWith("You are mining")) return "miner";
   if (prompt.startsWith("Complete the following task")) return "attempt";
@@ -511,11 +528,14 @@ async function round(s: Store, night: NightRecord) {
     const mined = await minedTasks(night, p.handoff);
     if (mined !== null && mined < MIN_MINED_TASKS)
       return finish(s, night, "idle", "insufficient_tasks", { mined });
-    const { pending } = await readJson<{ pending: unknown[] }>(
-      path.join(p.handoff, "pending.json"),
-    );
+    const { pending } = await readJson<{
+      pending: { id: string; prompt: string }[];
+    }>(path.join(p.handoff, "pending.json"));
     night.state = "pending";
-    night.pending = { count: pending.length };
+    night.pending = {
+      count: pending.length,
+      items: pending.map((i) => ({ id: i.id, kind: promptKind(i.prompt) })),
+    };
     return night;
   }
   if (run.code !== 0)
