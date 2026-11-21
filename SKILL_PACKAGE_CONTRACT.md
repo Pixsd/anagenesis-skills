@@ -47,15 +47,15 @@ Logs go to stderr, without credentials; every error carries `code`, `message`, `
 Mutations require a UUID `operationId`: same id and same input return the same result; a different input yields `IDEMPOTENCY_CONFLICT`.
 The API exposes `create`, `improve`, `submit`, `history`, `restore`, `recordFeedback`, `resolve` and `sleep`; every operation receives the store explicitly.
 
-| CLI                                          | Essential input                                                                               | Result                                                                    |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `anagenesis create --request request.json`   | skillId, objective, sources, examples, evaluation policy                                      | candidateId, briefPath, workspacePath, evaluationPlan                     |
-| `anagenesis improve --request request.json`  | skillId, expectedVersion, feedbackIds, objective                                              | candidate based on the active revision and a diagnostic brief             |
-| `anagenesis submit --request request.json`   | candidateId, expectedDigest, evidenceManifest, diagnosis, operationId                         | published with version/commit, or rejected with reasons                   |
-| `anagenesis history --skill ID`              | skillId, optional cursor/limit                                                                | revisions of that skill only, provenance and reasons                      |
-| `anagenesis restore --request request.json`  | skillId, sourceVersion, expectedVersion, reason, operationId                                  | direct publication of vN+1 with exact historical content and restoredFrom |
-| `anagenesis feedback --request request.json` | skillId, version, runId, observation, provenance, optional analysis                           | immutable feedbackId                                                      |
-| `anagenesis resolve --skill ID`              | skillId, optional version                                                                     | immutable path, digest, version and commit                                |
+| CLI                                          | Essential input                                                                                        | Result                                                                    |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| `anagenesis create --request request.json`   | skillId, objective, sources, examples, evaluation policy                                               | candidateId, briefPath, workspacePath, evaluationPlan                     |
+| `anagenesis improve --request request.json`  | skillId, expectedVersion, feedbackIds, objective                                                       | candidate based on the active revision and a diagnostic brief             |
+| `anagenesis submit --request request.json`   | candidateId, expectedDigest, evidenceManifest, diagnosis, operationId                                  | published with version/commit, or rejected with reasons                   |
+| `anagenesis history --skill ID`              | skillId, optional cursor/limit                                                                         | revisions of that skill only, provenance and reasons                      |
+| `anagenesis restore --request request.json`  | skillId, sourceVersion, expectedVersion, reason, operationId                                           | direct publication of vN+1 with exact historical content and restoredFrom |
+| `anagenesis feedback --request request.json` | skillId, version, runId, observation, provenance, optional analysis                                    | immutable feedbackId                                                      |
+| `anagenesis resolve --skill ID`              | skillId, optional version                                                                              | immutable path, digest, version and commit                                |
 | `anagenesis sleep --request request.json`    | action (run, resume, dry-run, harvest, status, adopt, cleanup, discard, schedule, unschedule, evalkit) | night state: pending prompts, idle, staged, rejected, or a publication    |
 
 Errors distinguish INVALID_INPUT, NOT_FOUND, ALREADY_EXISTS, STALE_BASE, EVIDENCE_INVALID, VALIDATION_FAILED, STORE_BUSY, STORE_CORRUPT and IDEMPOTENCY_CONFLICT.
@@ -108,7 +108,7 @@ Missing, duplicated, mismatched-digest or stale-base results block publication.
 ### 5.2 Sleep: self-evaluated path
 
 Sleep follows Microsoft's cycle unchanged: tasks mined from transcripts and feedback, a deterministic train/held-out split, replay, reflection with at most `edit_budget` edits, re-evaluation on the held-out split and Microsoft's gate. Defaults are Microsoft's (gate on, `auto_adopt` off).
-Tasks and scores come from the same model that proposes the edits, so this held-out is weaker than §5.1. Sleep revisions are labelled `kind: "sleep"` in history and the rules of §5.1 apply only to `submit`, which is unchanged.
+Tasks and scores come from the calling agent's models, whose independence from the model that proposes the edits is not verified, so this held-out is weaker than §5.1. Sleep revisions are labelled `kind: "sleep"` in history and the rules of §5.1 apply only to `submit`, which is unchanged.
 A night needs at least 3 tasks mined by the model; otherwise it is idle. Nothing starts without an explicit `sleep run` and nothing publishes without an explicit `sleep adopt`.
 Each night has its own state machine, input digest and pinned bases; terminal resumes never relaunch a round. A staged adoption runs upstream’s adopt command once more, then publishes through the store. The package cannot verify that prompts were answered in clean contexts; this remains an instruction to the caller.
 

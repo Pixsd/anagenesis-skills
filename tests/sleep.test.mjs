@@ -7,6 +7,7 @@ import path from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { sleep, recordFeedback } from "../dist/index.js";
+import { promptKind } from "../dist/sleep/night.js";
 import { published, temporary, uuid } from "./helpers.mjs";
 
 import {
@@ -93,6 +94,92 @@ test("Nights without enough mined tasks end idle", opts, async (t) => {
   assert.equal(few.status, "idle");
   assert.equal(few.reason, "insufficient_tasks");
   assert.equal(few.rounds, 2); // mining, then pinning the tasks
+});
+
+test(
+  "Pending prompts are labelled by kind and the pinned models are echoed",
+  opts,
+  async (t) => {
+    const store = await fresh(t);
+    const models = { attempt: "target-model", judge: "mid-model" };
+    const first = await sleep(store, { ...run(), models });
+    assert.equal(first.status, "pending");
+    assert.equal(first.pending.items.length, first.pending.count);
+    assert.ok(first.pending.items.every((i) => /^[a-f0-9]{16}$/.test(i.id)));
+    assert.deepEqual(
+      [...new Set(first.pending.items.map((i) => i.kind))],
+      ["miner"],
+    );
+    assert.deepEqual(first.pending.models, models);
+    await respond(first);
+    const next = await sleep(store, {
+      schemaVersion: 1,
+      action: "resume",
+      sleepId: first.sleepId,
+    });
+    assert.equal(next.status, "pending");
+    assert.ok(next.pending.items.some((i) => i.kind === "attempt"));
+    assert.deepEqual(next.pending.models, models);
+    await assert.rejects(sleep(store, { ...run(), models: { attempt: "" } }), {
+      code: "INVALID_INPUT",
+    });
+  },
+);
+
+test(
+  "models take part in idempotency: same models replay, others conflict",
+  opts,
+  async (t) => {
+    const store = await fresh(t);
+    const base = run({ models: { attempt: "a", judge: "j" } });
+    const first = await sleep(store, base);
+    const swapped = { ...base, models: { judge: "j", attempt: "a" } };
+    assert.equal((await sleep(store, swapped)).sleepId, first.sleepId);
+    for (const models of [{ attempt: "other" }, {}, undefined]) {
+      const { models: _m, ...rest } = base;
+      await assert.rejects(sleep(store, models ? { ...rest, models } : rest), {
+        code: "IDEMPOTENCY_CONFLICT",
+      });
+    }
+  },
+);
+
+test(
+  "A pending night saved without kinds gets them back from the handoff",
+  opts,
+  async (t) => {
+    const store = await fresh(t);
+    const first = await sleep(store, run());
+    const file = path.join(
+      store.root,
+      "sleep",
+      "nights",
+      first.sleepId,
+      "run.json",
+    );
+    const record = JSON.parse(await fs.readFile(file, "utf8"));
+    delete record.pending.items;
+    await fs.writeFile(file, JSON.stringify(record));
+    const view = await sleep(store, {
+      schemaVersion: 1,
+      action: "status",
+      sleepId: first.sleepId,
+    });
+    assert.equal(view.pending.items.length, first.pending.count);
+    assert.equal(view.pending.items[0].kind, "miner");
+  },
+);
+
+test("Every prompt kind gets its public label", () => {
+  const cases = {
+    "You are mining recurring tasks": "miner",
+    "Complete the following task": "attempt",
+    "Score how well the response": "judge",
+    "You are SkillOpt's optimizer": "reflect",
+    "Something else entirely": "other",
+  };
+  for (const [prompt, kind] of Object.entries(cases))
+    assert.equal(promptKind(prompt), kind);
 });
 
 test(

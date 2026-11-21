@@ -514,7 +514,7 @@ Same as `submit-create`, with `baseVersion`/`baseDigest` from the improve respon
 
 ## sleep-run
 
-One transcript per past session that used the skill. All transcript fields except `sessionId` and `project` are optional. `memory` is optional: include it with the exact current text of your memory file to allow memory proposals, or omit it and set `"config": {"evolve_memory": false}`.
+One transcript per past session that used the skill. All transcript fields except `sessionId` and `project` are optional. `models` is optional and records the models you intend to use per prompt kind; keys you leave out are yours to choose per round (see `sleep.md`, "Models"). `memory` is optional: include it with the exact current text of your memory file to allow memory proposals, or omit it and set `"config": {"evolve_memory": false}`.
 
 ```json sleep-run
 {
@@ -527,6 +527,12 @@ One transcript per past session that used the skill. All transcript fields excep
     "modelVersion": "your-model-version"
   },
   "skills": [{ "skillId": "zoho-mail", "expectedVersion": 2 }],
+  "models": {
+    "attempt": "model-that-uses-the-skill",
+    "judge": "mid-tier-model",
+    "miner": "mid-tier-model",
+    "reflect": "mid-tier-model"
+  },
   "memory": {
     "label": "AGENTS.md",
     "text": "# Project notes\n\nGitHub notifications go to Dev/GitHub.\n"
